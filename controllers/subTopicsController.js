@@ -18,4 +18,34 @@ const createSubTopic = async (req, res, next) => {
   }
 };
 
-module.exports = { createSubTopic };
+const getAllSubTopics = async (req, res, next) => {
+  try {
+    const subTopics = await SubTopics.findAll();
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "All sub topics get successfully",
+      data: subTopics,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getSubTopicsByTopics = async (req, res, next) => {
+  try {
+    const { topicId } = req.params;
+
+    const subTopics = await SubTopics.findAll({ where: { topicId } });
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Sub topics get successfully by topics",
+      data: subTopics,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { createSubTopic, getAllSubTopics, getSubTopicsByTopics };
