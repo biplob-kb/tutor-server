@@ -1,11 +1,10 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
-const SubTopics = require("./subTopiceModel");
 
-const Topics = sequelize.define(
-  "Topics",
+const SubTopics = sequelize.define(
+  "SubTopics",
   {
-    topicsId: {
+    subTopicId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -18,6 +17,16 @@ const Topics = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    topicId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: "Topics",
+        key: "topicsId",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
   },
   {
     timestamps: true,
@@ -25,14 +34,4 @@ const Topics = sequelize.define(
   }
 );
 
-// Association
-Topics.hasMany(SubTopics, {
-  foreignKey: "topicId",
-  as: "subTopics", // Alias for the association
-});
-SubTopics.belongsTo(Topics, {
-  foreignKey: "topicId",
-  as: "topic", // Alias for the parent
-});
-
-module.exports = Topics;
+module.exports = SubTopics;

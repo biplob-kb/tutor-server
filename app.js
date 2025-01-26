@@ -9,6 +9,7 @@ const { connectDb } = require("./config/db");
 const initModels = require("./models");
 const userRouter = require("./routers/userRouter");
 const topicsRouter = require("./routers/topicsRouter");
+const subTopicRouter = require("./routers/subTopicRouter");
 
 const app = express();
 
@@ -23,6 +24,7 @@ initModels();
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/topics", topicsRouter);
+app.use("/api/sub-topics", subTopicRouter);
 
 app.get("/", (req, res) => {
   res.send("Postgres server is running from third...");
